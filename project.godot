@@ -15,10 +15,6 @@ run/main_scene="res://scene/world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
-
-Global="*res://global.gd"
-
 [display]
 
 window/size/viewport_width=600
@@ -54,7 +50,7 @@ attack={
 
 [layer_names]
 
-2d_physics/layer_2="projecttile"
+2d_physics/layer_2="wall"
 
 [rendering]
 
