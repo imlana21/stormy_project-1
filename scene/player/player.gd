@@ -9,15 +9,13 @@ var is_freeze = false
 var is_attacking = false
 
 func _process(delta):
-	look_at(get_global_mouse_position())
-	pass
-
+	if is_freeze == false:
+		look_at(get_global_mouse_position())
+		
 func _physics_process(delta):	
 	if is_freeze == false:
 		character_velocity()
 		attack()
-	else:
-		look_at(Vector2.ZERO)
 
 func character_velocity():
 	var direction = Vector2()
@@ -47,5 +45,7 @@ func spawn_bullet():
 	get_tree().get_root().add_child(bullet_instance)
 	await get_tree().create_timer(FIRE_RATE).timeout
 	is_attacking = false
+
+
 	
 	

@@ -4,13 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://cismgx7216wak" path="res://assets/bullets.png" id="1_bgdth"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bsf24"]
-radius = 7.0
-height = 38.0
+radius = 4.99999
+height = 28.0
 
-[node name="Bullet" type="RigidBody2D"]
+[node name="Bullet" type="RigidBody2D" groups=["bullet"]]
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_7x44q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("1_bgdth")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

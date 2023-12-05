@@ -21,6 +21,3 @@ vframes = 12
 
 [node name="BulletPosition" type="Node2D" parent="."]
 position = Vector2(13, 0)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
