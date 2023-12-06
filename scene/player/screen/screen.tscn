@@ -17,6 +17,8 @@ wait_time = 30.0
 one_shot = true
 
 [node name="Label" type="Label" parent="Camera2D"]
+light_mask = 512
+visibility_layer = 512
 offset_left = 89.0
 offset_top = -135.0
 offset_right = 132.0

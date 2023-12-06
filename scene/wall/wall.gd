@@ -5,7 +5,7 @@ signal wall_destroyed
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("bullet"):
 		wall_destroyed.emit(self)
-		$WallTimerSpawn.wait_time = 2
+		$WallTimerSpawn.wait_time = 5
 		$WallTimerSpawn.start()
 		self.hide()
 		self.set_collision_layer_value(1, false)
