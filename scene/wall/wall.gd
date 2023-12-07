@@ -3,7 +3,7 @@ extends StaticBody2D
 signal wall_destroyed
 	
 func _on_area_2d_body_entered(body):
-	if body.is_in_group("bullet"):
+	if body.is_in_group("bullet") and is_in_group("wall"):
 		wall_destroyed.emit(self)
 		$WallTimerSpawn.wait_time = 5
 		$WallTimerSpawn.start()
