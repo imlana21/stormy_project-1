@@ -1,7 +1,7 @@
 [gd_scene load_steps=30 format=3 uid="uid://b4n8gdp6i37yr"]
 
 [ext_resource type="Script" path="res://scene/enemy/enemy.gd" id="1_d1far"]
-[ext_resource type="Texture2D" uid="uid://beqkwu1tuqt30" path="res://assets/slime.png" id="1_q4imb"]
+[ext_resource type="Texture2D" uid="uid://beqkwu1tuqt30" path="res://scene/assets/slime.png" id="1_q4imb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oklem"]
 radius = 12.0

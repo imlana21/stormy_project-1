@@ -565,7 +565,9 @@ shape = SubResource("CapsuleShape2D_g1an8")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nq0xb")
-animation = &"walk_down"
+animation = &"attack_up"
+frame = 3
+frame_progress = 1.0
 
 [node name="AreaBullet" type="Area2D" parent="."]
 visible = false

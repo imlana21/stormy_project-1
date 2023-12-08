@@ -13,26 +13,26 @@ func _process(delta):
 		
 func _physics_process(delta):	
 	if is_freeze == false:
-		character_velocity()
-		attack_animation()
-		idle_animation()
-
+		if is_attacking == false:
+			character_velocity()
+			idle_animation()
+			attack_animation()
+		
 func character_velocity():
 	var direction = Vector2()
-	if is_attacking == false:
-		if Input.is_action_pressed("up"):
-			direction += Vector2(0, -1)
-		if Input.is_action_pressed("down"):
-			direction += Vector2(0, 1)
-		if Input.is_action_pressed("left"):
-			direction += Vector2(-1, 0)
-		if Input.is_action_pressed("right"):
-			direction += Vector2(1, 0)
-		set_velocity(direction * CHAR_SPEED)	
-		move_and_slide()
+	if Input.is_action_pressed("up"):
+		direction += Vector2(0, -1)
+	if Input.is_action_pressed("down"):
+		direction += Vector2(0, 1)
+	if Input.is_action_pressed("left"):
+		direction += Vector2(-1, 0)
+	if Input.is_action_pressed("right"):
+		direction += Vector2(1, 0)
+	set_velocity(direction * CHAR_SPEED)	
+	move_and_slide()
 			
 func attack_animation():
-	if Input.is_action_just_pressed("attack") and is_attacking == false:
+	if Input.is_action_just_pressed("attack"):
 		if(mouse_position() > -135 and mouse_position() < -45):
 			$Sprite.play("attack_up")
 		elif(mouse_position() > -45 and mouse_position() < 45):
@@ -64,8 +64,8 @@ func idle_animation():
 	elif Input.is_action_pressed("right"):
 		$Sprite.play("walk_right")
 	else:
-		$Sprite.play("idle")
-			
+		$Sprite.play("idle_down")
+	
 func mouse_position():
 	var mouse_position = get_global_mouse_position()
 	var angle_to_mouse = atan2(mouse_position.y - global_position.y, mouse_position.x - global_position.x)

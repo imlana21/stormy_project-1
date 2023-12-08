@@ -2,12 +2,29 @@ extends Node2D
 
 @onready var wall = $Wall
 @onready var enemy = preload("res://scene/enemy/enemy.tscn")
+@onready var cursor = preload("res://assets/cursor-32.png")
 
 var wall_position = Vector2.ZERO
+
+func _ready():
+	$Pause.hide()
+
+func _process(delta):
+	$Pause.position = $Screen/Player.position
+	pause_game()
 
 func add_time():
 	$Screen/Camera2D/Timer.wait_time = $Screen/Camera2D/Timer.time_left + 5
 	$Screen/Camera2D/Timer.start()
+
+func pause_game():
+	if Input.is_action_just_pressed("pause"):
+		Input.set_custom_mouse_cursor(null)
+		Autoload.toggle_pause()
+		if Autoload.is_paused:
+			$Pause.show()
+	else:
+		Input.set_custom_mouse_cursor(cursor)
 	
 func random_tilemap_position():
 	var map_size = $TileMap.get_used_rect().size
@@ -34,3 +51,4 @@ func _on_enemy_enemy_died():
 
 func _on_enemy_enemy_respawn():
 	spawn_enemy()
+

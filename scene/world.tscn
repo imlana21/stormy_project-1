@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cocc7ueklbbh4"]
+[gd_scene load_steps=16 format=3 uid="uid://cocc7ueklbbh4"]
 
 [ext_resource type="Texture2D" uid="uid://ve7jvjoiixpq" path="res://assets/TX_Tileset_Grass.png" id="1_3u2fy"]
 [ext_resource type="Script" path="res://scene/world.gd" id="1_338c4"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://eahjrxv4rq7q" path="res://assets/TX_Shadow_Plant.png" id="4_qbf55"]
 [ext_resource type="Texture2D" uid="uid://d338d733udwhq" path="res://assets/TX_Plant.png" id="5_dbeuu"]
 [ext_resource type="PackedScene" uid="uid://b4n8gdp6i37yr" path="res://scene/enemy/enemy.tscn" id="8_a4xx7"]
+[ext_resource type="PackedScene" uid="uid://bbf4t7oks14os" path="res://scene/menu/pause.tscn" id="9_2jhrv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jc6xt"]
 
@@ -4027,6 +4028,7 @@ sources/2 = SubResource("TileSetAtlasSource_il2ef")
 sources/3 = SubResource("TileSetAtlasSource_k1wpl")
 
 [node name="World" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_338c4")
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -4042,10 +4044,10 @@ scale = Vector2(0.7, 0.7)
 collision_mask = 1
 
 [node name="Screen" parent="." instance=ExtResource("4_bjwnx")]
-position = Vector2(222, 121)
+position = Vector2(328, 170)
 
 [node name="Enemy" parent="." instance=ExtResource("8_a4xx7")]
-position = Vector2(419, 123)
+position = Vector2(444, 80)
 
 [node name="Wall2" parent="." instance=ExtResource("3_duusu")]
 position = Vector2(245, 537)
@@ -4087,6 +4089,17 @@ position = Vector2(622, 248)
 
 [node name="Enemy3" parent="." instance=ExtResource("8_a4xx7")]
 position = Vector2(139, 358)
+
+[node name="Pause" parent="." instance=ExtResource("9_2jhrv")]
+process_mode = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 
 [connection signal="wall_destroyed" from="Wall" to="." method="_on_wall_destroyed"]
 [connection signal="enemy_died" from="Enemy" to="." method="_on_enemy_enemy_died"]
