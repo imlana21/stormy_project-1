@@ -10,6 +10,7 @@ func _ready():
 	$Pause.hide()
 
 func _process(delta):
+	#Make Pause follow Character Position
 	$Pause.position = $Screen/Player.position
 	pause_game()
 

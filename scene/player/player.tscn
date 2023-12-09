@@ -477,9 +477,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1qhyn")
 }],
-"loop": false,
+"loop": true,
 "name": &"walk_down",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -500,9 +500,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3wwaw")
 }],
-"loop": false,
+"loop": true,
 "name": &"walk_left",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -523,9 +523,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kegea")
 }],
-"loop": false,
+"loop": true,
 "name": &"walk_right",
-"speed": 20.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -546,9 +546,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b52jv")
 }],
-"loop": false,
+"loop": true,
 "name": &"walk_up",
-"speed": 20.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qd6lj"]
@@ -565,16 +565,34 @@ shape = SubResource("CapsuleShape2D_g1an8")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nq0xb")
-animation = &"attack_up"
-frame = 3
-frame_progress = 1.0
+animation = &"walk_up"
+frame_progress = 0.623075
 
 [node name="AreaBullet" type="Area2D" parent="."]
-visible = false
 
 [node name="BulletPosition" type="Marker2D" parent="AreaBullet"]
 position = Vector2(19, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaBullet"]
+visible = false
+shape = SubResource("CircleShape2D_qd6lj")
+
+[node name="AreaBullet2" type="Area2D" parent="."]
+visible = false
+
+[node name="BulletPosition" type="Marker2D" parent="AreaBullet2"]
+position = Vector2(19, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaBullet2"]
+visible = false
+shape = SubResource("CircleShape2D_qd6lj")
+
+[node name="AreaBullet3" type="Area2D" parent="."]
+visible = false
+
+[node name="BulletPosition" type="Marker2D" parent="AreaBullet3"]
+position = Vector2(19, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaBullet3"]
 visible = false
 shape = SubResource("CircleShape2D_qd6lj")

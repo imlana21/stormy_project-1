@@ -1,24 +1,28 @@
 extends CharacterBody2D
 
 @export var CHAR_SPEED = 100
-@export var BULLET_SPEED = 1000
+@export var BULLET_SPEED = 500
+@export var SHOTGUN_SPEED = 1000
 @export var FIRE_RATE = 0.2
 
 var bullet = preload("res://scene/player/bullet/bullet.tscn")
 var is_freeze = false
 var is_attacking = false
+@onready var area_bullet = [$AreaBullet, $AreaBullet2, $AreaBullet3]
 
 func _process(delta):
-	$AreaBullet.look_at(get_global_mouse_position())
+	print(get_global_mouse_position())
+	for i in area_bullet:
+		i.look_at(get_global_mouse_position())
 		
 func _physics_process(delta):	
-	if is_freeze == false:
-		if is_attacking == false:
-			character_velocity()
-			idle_animation()
-			attack_animation()
+	if !is_freeze:
+		if !is_attacking:
+			walk()
+			fire()
 		
-func character_velocity():
+# Character Walk
+func walk():
 	var direction = Vector2()
 	if Input.is_action_pressed("up"):
 		direction += Vector2(0, -1)
@@ -30,31 +34,27 @@ func character_velocity():
 		direction += Vector2(1, 0)
 	set_velocity(direction * CHAR_SPEED)	
 	move_and_slide()
-			
-func attack_animation():
-	if Input.is_action_just_pressed("attack"):
-		if(mouse_position() > -135 and mouse_position() < -45):
-			$Sprite.play("attack_up")
-		elif(mouse_position() > -45 and mouse_position() < 45):
-			$Sprite.play("attack_right")
-		elif(mouse_position() > 45 and mouse_position() < 135):
-			$Sprite.play("attack_down")
-		elif(mouse_position() < -135 or mouse_position() > 135):
-			$Sprite.play("attack_left")
-		spawn_bullet()
-	
-func spawn_bullet():
-	# Call the bullet
-	var bullet_instance = bullet.instantiate()
-	bullet_instance.position = $AreaBullet/BulletPosition.get_global_position()
-	bullet_instance.rotation_degrees = $AreaBullet.rotation_degrees
-	bullet_instance.apply_impulse(Vector2(BULLET_SPEED, 0).rotated($AreaBullet.rotation), Vector2())	
-	is_attacking = true
-	get_tree().get_root().add_child(bullet_instance)
-	await get_tree().create_timer(FIRE_RATE).timeout
-	is_attacking = false
+	walk_animation()
 
-func idle_animation():
+# Character Attack
+func fire():
+	# Call bullet and run animation
+	if Input.is_action_just_pressed("attack") or Input.is_action_just_pressed("attack2"):
+		attack_animation()
+		is_attacking = true
+		
+	if Input.is_action_just_pressed("attack"):
+		spawn_bullet($AreaBullet, bullet, $AreaBullet/BulletPosition)
+		await get_tree().create_timer(FIRE_RATE).timeout
+		is_attacking = false		
+	elif Input.is_action_just_pressed("attack2"):
+		spawn_bullet($AreaBullet, bullet, $AreaBullet/BulletPosition)
+		spawn_bullet($AreaBullet2, bullet, $AreaBullet2/BulletPosition)
+		spawn_bullet($AreaBullet3, bullet, $AreaBullet3/BulletPosition)
+		await get_tree().create_timer(FIRE_RATE * 5).timeout
+		is_attacking = false		
+	
+func walk_animation():
 	if Input.is_action_pressed("up"):
 		$Sprite.play("walk_up")
 	elif Input.is_action_pressed("down"):
@@ -65,11 +65,29 @@ func idle_animation():
 		$Sprite.play("walk_right")
 	else:
 		$Sprite.play("idle_down")
+
+func attack_animation():
+	if(deg_mouse_position() > -135 and deg_mouse_position() < -45):
+		$Sprite.play("attack_up")
+	elif(deg_mouse_position() > -45 and deg_mouse_position() < 45):
+		$Sprite.play("attack_right")
+	elif(deg_mouse_position() > 45 and deg_mouse_position() < 135):
+		$Sprite.play("attack_down")
+	elif(deg_mouse_position() < -135 or deg_mouse_position() > 135):
+		$Sprite.play("attack_left")
 	
-func mouse_position():
+func deg_mouse_position():
 	var mouse_position = get_global_mouse_position()
 	var angle_to_mouse = atan2(mouse_position.y - global_position.y, mouse_position.x - global_position.x)
 	return rad_to_deg(angle_to_mouse)
+
+func spawn_bullet(area, bullet, bullet_position):
+	# Call the object
+	var bullet_instance = bullet.instantiate()
+	bullet_instance.position = bullet_position.get_global_position()
+	bullet_instance.rotation_degrees = area.rotation_degrees
+	bullet_instance.apply_impulse(Vector2(BULLET_SPEED, 0).rotated(area.rotation), Vector2())	
+	get_tree().get_root().add_child(bullet_instance)
 
 	
 	
