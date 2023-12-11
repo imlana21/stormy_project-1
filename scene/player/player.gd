@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var CHAR_SPEED = 100
-@export var BULLET_SPEED = 500
+@export var BULLET_SPEED = 400
 @export var SHOTGUN_SPEED = 1000
 @export var FIRE_RATE = 0.2
 
@@ -11,7 +11,6 @@ var is_attacking = false
 @onready var area_bullet = [$AreaBullet, $AreaBullet2, $AreaBullet3]
 
 func _process(delta):
-	print(get_global_mouse_position())
 	for i in area_bullet:
 		i.look_at(get_global_mouse_position())
 		
@@ -44,15 +43,15 @@ func fire():
 		is_attacking = true
 		
 	if Input.is_action_just_pressed("attack"):
-		spawn_bullet($AreaBullet, bullet, $AreaBullet/BulletPosition)
+		spawn_bullet($AreaBullet, $AreaBullet/BulletPosition)
 		await get_tree().create_timer(FIRE_RATE).timeout
-		is_attacking = false		
+		is_attacking = false
 	elif Input.is_action_just_pressed("attack2"):
-		spawn_bullet($AreaBullet, bullet, $AreaBullet/BulletPosition)
-		spawn_bullet($AreaBullet2, bullet, $AreaBullet2/BulletPosition)
-		spawn_bullet($AreaBullet3, bullet, $AreaBullet3/BulletPosition)
-		await get_tree().create_timer(FIRE_RATE * 5).timeout
-		is_attacking = false		
+		spawn_bullet($AreaBullet, $AreaBullet/BulletPosition)
+		spawn_bullet($AreaBullet2, $AreaBullet2/BulletPosition)
+		spawn_bullet($AreaBullet3, $AreaBullet3/BulletPosition)
+		await get_tree().create_timer(FIRE_RATE).timeout
+		is_attacking = false	
 	
 func walk_animation():
 	if Input.is_action_pressed("up"):
@@ -81,13 +80,19 @@ func deg_mouse_position():
 	var angle_to_mouse = atan2(mouse_position.y - global_position.y, mouse_position.x - global_position.x)
 	return rad_to_deg(angle_to_mouse)
 
-func spawn_bullet(area, bullet, bullet_position):
+#func spawn_bullet(area, bullet_position):
+	## Call the object
+	#var bullet_instance = bullet.instantiate()
+	#bullet_instance.position = bullet_position.get_global_position()
+	#bullet_instance.direction = bullet_instance.get_global_position() - get_global_position()
+	#bullet_instance.translate(bullet_instance.direction)
+	#get_tree().get_root().add_child(bullet_instance)
+
+
+func spawn_bullet(area, bullet_position):
 	# Call the object
 	var bullet_instance = bullet.instantiate()
 	bullet_instance.position = bullet_position.get_global_position()
 	bullet_instance.rotation_degrees = area.rotation_degrees
 	bullet_instance.apply_impulse(Vector2(BULLET_SPEED, 0).rotated(area.rotation), Vector2())	
 	get_tree().get_root().add_child(bullet_instance)
-
-	
-	

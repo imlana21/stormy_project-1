@@ -19,10 +19,11 @@ one_shot = true
 [node name="Label" type="Label" parent="Camera2D"]
 light_mask = 512
 visibility_layer = 512
-offset_left = 89.0
-offset_top = -135.0
-offset_right = 132.0
-offset_bottom = -118.0
+z_index = 1
+offset_left = 271.0
+offset_top = -164.0
+offset_right = 314.0
+offset_bottom = -147.0
 theme_override_font_sizes/font_size = 12
 text = "00:00
 "
